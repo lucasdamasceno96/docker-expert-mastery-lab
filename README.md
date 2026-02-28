@@ -21,7 +21,7 @@ This repository is a hands-on laboratory designed to bridge the gap between inte
 
 ### Phase 1: Image Optimization & BuildKit
 
-- **Exercise 01:** Multi-stage builds for Go/Node.js. Focus on layer caching and distroless images.
+- **Exercise 01:** Multi-stage builds for Go. Focus on layer caching and distroless images.
 - **Exercise 02:** Advanced BuildKit features (Secret mounts, SSH mounts, and Cache imports/exports).
 
 ### Phase 2: Docker Internals & Runtime isolation
