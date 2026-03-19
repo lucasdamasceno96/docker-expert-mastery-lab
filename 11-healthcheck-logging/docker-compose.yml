@@ -1,0 +1,23 @@
+services:
+  web-api:
+    image: nginx:alpine
+    container_name: web-api
+    healthcheck:
+      # Testa se o Nginx responde na porta 80
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 10s    # Frequência do teste
+      timeout: 5s     # Tempo limite para resposta
+      retries: 3      # Quantas falhas antes de marcar como "unhealthy"
+      start_period: 5s # Tempo de carência para o boot da app
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m" # Limita o log a 10MB
+        max-file: "3"   # Mantém apenas os últimos 3 arquivos
+    networks:
+      - obs-net
+
+networks:
+  obs-net:
+    driver: bridge
