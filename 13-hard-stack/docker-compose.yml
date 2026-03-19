@@ -1,0 +1,56 @@
+services:
+  gateway:
+    image: nginx:1.25-bookworm
+    container_name: gateway
+    ports:
+      - "9090:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    tmpfs:
+      - /var/cache/nginx:uid=101,gid=101,mode=1777
+      - /var/run:uid=101,gid=101,mode=1777
+      - /tmp:uid=101,gid=101,mode=1777
+    read_only: true
+    networks:
+      - frontend_net
+      - backend_net
+    restart: unless-stopped
+
+  backend-api:
+    image: python:3.11-slim-bookworm
+    container_name: backend-api
+    command: python3 -m http.server 8000
+    working_dir: /app
+    volumes:
+      - ./app:/app:ro
+    networks:
+      - backend_net
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import socket; s=socket.socket(); s.connect(('127.0.0.1',8000))"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  database:
+    image: postgres:16-bookworm
+    container_name: database
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: appdb
+    networks:
+      - backend_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+networks:
+  frontend_net:
+    driver: bridge
+  backend_net:
+    driver: bridge
+    internal: true
