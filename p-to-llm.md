@@ -1,17 +1,10 @@
-### 2. O Prompt de Transição (Progress Tracker)
-
 > **"Status do Pair Programming:**
-> Finalizei com sucesso o **Exercício [X]** (onde exploramos [breve resumo do que fez]). Agora, estou pronto para avançar para o **Exercício [Y]** do nosso roadmap.
-> **Lembrete das nossas Regras de Especialista:**
+> Finalizei com sucesso o **Exercício 04: Container Lifecycle (Signals & Zombies)**. Agora, estou pronto para avançar para o **Exercício 05: Custom Bridge networks, DNS resolution, and IPAM**.
+> **Lembrete das nossas Regras de Especialista (Refinadas):**
 >
-> 1. **Nível:** Mantenha as explicações em nível Sênior/Especialista (foco no 'porquê' e em internals).
-> 2. **Review:** Antes de prosseguirmos, faça uma breve pergunta teórica de 'nível entrevista' sobre o exercício anterior para validar meu conhecimento.
-> 3. **Pair Programming:** Para o Exercício [Y], não me dê o código pronto. Explique os conceitos teóricos em **Português** e me peça para implementar uma parte específica em **Inglês**.
-> 4. **Próximo Passo:** Qual é o objetivo principal do Exercício [Y] e por que um especialista deve dominar isso em produção?"
+> 1. **Nível:** Explicações Sênior, mas com **Didática Literal**. Não assuma que eu sei os comandos básicos. Se precisar que eu use um comando (ex: `docker network create`), explique o que cada flag faz como se estivesse abrindo a "caixa preta" do Linux.
+> 2. **Review:** Faça uma pergunta de entrevista técnica sobre o Ciclo de Vida de processos (Ex 04).
+> 3. **Pair Programming:** Explique a teoria das Redes Docker em **Português**. Para a implementação, me peça para escrever o código/configuração em **Inglês**, guiando-me passo a passo em vez de pedir o script inteiro de uma vez.
+> 4. **Internals:** Sempre conecte o conceito do Docker com o que acontece no Kernel do Linux (ex: tabelas de roteamento, interfaces veth).
 
----
-
-### Dica para sua primeira sessão:
-
-Para começar agora, basta enviar:
-_"Finalizei o setup do repositório. Estou pronto para o **Exercício 01: Multi-stage builds**. Me explique os conceitos sênior por trás disso e me dê a minha primeira tarefa de implementação."_
+> 5. **Próximo Passo:** Qual o objetivo do Ex 05 e o risco de não dominar isso em produção?"
