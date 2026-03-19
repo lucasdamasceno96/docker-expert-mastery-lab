@@ -49,6 +49,41 @@ This repository is a hands-on laboratory designed to bridge the gap between inte
 - **Exercise 11:** Healthcheck strategies and Logging Drivers (Fluentd/Splunk/Gelf).
 - **Exercise 12:** Performance profiling: `docker stats` internals and memory/CPU limit testing.
 
+### Final Project
+
+- **🏗️ Exercise 13: Production-Ready Hardened Stack**
+
+**What we built in Exercise 13:**
+
+1. **Gateway (Nginx)**
+   - Based on `nginx:1.25-bookworm` (Debian only).
+   - Read-only filesystem and tmpfs for `/tmp`, `/var/run`, `/var/cache/nginx`.
+   - Proxy to internal backend using secure networking.
+   - Healthcheck ensured by container startup and proper proxy.
+
+2. **Backend API (Python HTTP Server)**
+   - Based on `python:3.11-slim-bookworm`.
+   - Serves real content from `/app` folder (mounted read-only).
+   - Internal network only (`backend_net`), cannot access external hosts.
+   - Healthcheck via native Python socket connection.
+
+3. **Database (Postgres)**
+   - Based on `postgres:16-bookworm`.
+   - Internal network only with healthcheck using `pg_isready`.
+   - Credentials and database configured via environment variables.
+
+4. **Networking**
+   - Two isolated networks:
+     - `frontend_net`: exposes gateway to host.
+     - `backend_net`: internal only, shared between backend and database.
+
+5. **Security & Hardening**
+   - Read-only gateway filesystem.
+   - tmpfs for runtime directories.
+   - Non-root Nginx user (`nginx`).
+   - Backend cannot reach external networks.
+   - Healthchecks validate container readiness without extra tools.
+
 ---
 
 ## 👨‍💻 How to use this Lab
