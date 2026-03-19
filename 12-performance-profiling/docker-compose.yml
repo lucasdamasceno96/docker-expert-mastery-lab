@@ -1,0 +1,20 @@
+services:
+  stress-app:
+    image: alexeiled/stress-ng
+    container_name: stress-test
+    # Limitamos a memória a apenas 50MB
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 50M
+        reservations:
+          memory: 20M
+    # O comando abaixo tenta alocar 100MB de RAM (o dobro do limite!)
+    command: --vm 1 --vm-bytes 100M --timeout 60s
+    networks:
+      - perf-net
+
+networks:
+  perf-net:
+    driver: bridge
