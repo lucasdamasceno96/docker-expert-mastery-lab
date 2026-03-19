@@ -1,0 +1,31 @@
+services:
+  api-server:
+    image: alpine
+    container_name: api-server
+    networks:
+      lab-secure-net:
+    command: sleep 3600
+
+  db-server:
+    image: alpine
+    container_name: db-server
+    networks:
+      lab-secure-net:
+        ipv4_address: 10.200.0.50 
+    command: sleep 3600
+
+  client-app:
+    image: alpine
+    container_name: client-app
+    networks:
+      - lab-secure-net
+    command: sh -c "apk add --no-cache curl && sleep 3600"
+
+networks:
+  lab-secure-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.200.0.0/24
+          ip_range: 10.200.0.128/25
+          gateway: 10.200.0.1
