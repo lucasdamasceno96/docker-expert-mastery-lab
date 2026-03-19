@@ -24,3 +24,9 @@ docker inspect <container_id> | jq '.[0].GraphDriver.Data'
 1. **Avoid Writing in Layers:** Heavy I/O (Databases, Logs, Temp files) should **never** happen in the container's writable layer. Use **Volumes** or **Bind Mounts** for native performance.
 2. **Layer Deletion Myth:** Deleting a file in a new Dockerfile `RUN` command doesn't reduce image size if the file was created in a previous layer. It only adds a "whiteout" marker in the `UpperDir`.
 3. **Storage Driver Choice:** While `overlay2` is the default and most efficient for most Linux distros, understanding its structure is crucial for debugging "Disk Full" issues where `/var/lib/docker/overlay2` consumes all space.
+
+## 🚨 Why This Matters in Production
+
+- Containers can suddenly consume all disk space via `/var/lib/docker/overlay2`.
+- Applications with heavy write patterns (e.g., databases, log-intensive services) may suffer severe performance degradation.
+- Debugging becomes difficult when CoW behavior is not understood.
