@@ -1,0 +1,27 @@
+services:
+  secure-app:
+    image: alpine
+    container_name: secure-app
+    command: sleep 3600
+    # --- Hardening Section ---
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_RAW # Only allow pinging, nothing else
+    security_opt:
+      - no-new-privileges:true # Prevents escalation via setuid binaries
+    # -------------------------
+    networks:
+      - hardening-net
+
+  insecure-app:
+    image: alpine
+    container_name: insecure-app
+    command: sleep 3600
+    # Default settings (Root-like privileges inside container)
+    networks:
+      - hardening-net
+
+networks:
+  hardening-net:
+    driver: bridge
